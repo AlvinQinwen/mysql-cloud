@@ -4,13 +4,14 @@ docker-compose 搭建mysql集群
 ## 指定网段
 本项目未使用env文件！！！ 如需使用请自行修改
 `172.19.182.0/16` 如需修改 请至docker-compose.yml 最下方 
+
 ```
 networks:
   mysql-network:
     ipam:
       config:
         - subnet: 172.19.182.0/16
-```yml
+```
 
 ## 集群相关
 - 172.19.182.0 master
@@ -31,43 +32,42 @@ networks:
 ## 执行步骤
 
 ### master
-```
-mysql -h172.19.182.0 -P3306 -uroot -pAdmin,123
 ```shell
+mysql -h172.19.182.0 -P3306 -uroot -pAdmin,123
+```
 
 获取master status
-```
-show master status;
 ```mysql
+show master status;
+```
+
 **获取File Position**
 
 ### slave 
 1. 此处为从服务器ip地址 只展示一个 其余从从服务只需执行相同的操作**更换ip**即可
-```
-mysql -h172.19.182.1 -P3306 -uroot -pAdmin,123 
 ```shell
-
+mysql -h172.19.182.1 -P3306 -uroot -pAdmin,123 
 ```
-change master to master_host='172.19.182.0',master_port=33065,master_user='root',master_password='Admin,123',master_log_file='mysql-bin.000003',master_log_pos=156;
-```mysql
 
->>>
-- master_host master的ip
-- master_port master的端口
-- master_user master 用户名
-- master_password master 密码
-- master_log_file master中此时的File 参数
-- master_log_pos master中此时的Position 参数
+```mysql
+change master to master_host='172.19.182.0',master_port=33065,master_user='root',master_password='Admin,123',master_log_file='mysql-bin.000003',master_log_pos=156;
+```
+1.  ster_host master的ip 
+2.  ster_port master的端口
+3.  aster_user master 用户名
+4.  aster_password master 密码
+5.  aster_log_file master中此时的File 参数
+6.  aster_log_pos master中此时的Position 参数
 
  salve中启动主从复制
- ```
- start slave;
  ```mysql
+ start slave;
+ ```
  
 查看从机的复制状态
-```
-SHOW SLAVE STATUS\G
 ```mysql
+SHOW SLAVE STATUS\G
+```
 
 当出现
             ** Slave_IO_Running: Yes **
