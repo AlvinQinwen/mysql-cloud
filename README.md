@@ -1,6 +1,10 @@
 # mysql-cloud
 docker-compose 搭建mysql集群 
 
+## 测试
+测试产生的数据可以通过Makefile删除
+命令：`make delete`
+
 ## 指定网段
 本项目未使用env文件！！！ 如需使用请自行修改
 `172.19.182.0/16` 如需修改 请至docker-compose.yml 最下方 
