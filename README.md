@@ -70,8 +70,8 @@ SHOW SLAVE STATUS\G
 ```
 
 当出现
-            ** Slave_IO_Running: Yes **
-            ** Slave_SQL_Running: Yes **
+            **Slave_IO_Running: Yes**
+            **Slave_SQL_Running: Yes**
 后即可正常使用
 
 ## 警告
