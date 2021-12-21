@@ -69,9 +69,9 @@ change master to master_host='172.19.182.0',master_port=33065,master_user='root'
 SHOW SLAVE STATUS\G
 ```
 
-当出现
-            **Slave_IO_Running: Yes**
-            **Slave_SQL_Running: Yes**
+当出现 <br>
+**Slave_IO_Running: Yes** <br>
+**Slave_SQL_Running: Yes** <br>
 后即可正常使用
 
 ## 警告
