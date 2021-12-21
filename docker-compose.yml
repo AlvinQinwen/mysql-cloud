@@ -1,0 +1,196 @@
+version: "3"
+
+services:
+
+  mysql-master:
+    image: "mysql:8.0.27"
+    ports:
+      - "3310:3306"
+    container_name: mysql-master
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: "Admin,123"
+      MYSQL_DATABASE: "videos"
+      MYSQL_USER: "video"
+      MYSQL_PASSWORD: "root123"
+    volumes:
+      - ./docker/mysql/master/data:/var/lib/mysql
+      - ./docker/mysql/master/conf/my.cnf:/etc/mysql/my.cnf
+    #      - ./docker/mysql/sql:/docker-entrypoint-initdb.d/
+    command: 
+        - "--server-id=1"    
+        - "--default-authentication-plugin=mysql_native_password"
+        - "--character-set-server=utf8mb4"
+        - "--binlog-do-db=videos"
+        - "--binlog-ignore-db=mysql"
+        - "--binlog_format=row"
+        - "--log-bin=mysql-bin"
+        - "--sync_binlog=1"
+        - "--expire_logs_days=7"  
+        - "--slave_skip_errors=1062"
+    restart: always
+    networks:
+      mysql-network:
+        ipv4_address: 172.19.182.0
+
+  mysql-slave1:
+    image: "mysql:8.0.27"
+    ports:
+      - "3311:3306"
+    container_name: mysql-slave1
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: "Admin,123"
+      MYSQL_DATABASE: "videos"
+      MYSQL_USER: "video"
+      MYSQL_PASSWORD: "root123"
+    volumes:
+      - ./docker/mysql/slave1/data:/var/lib/mysql
+      - ./docker/mysql/slave1/conf/my.cnf:/etc/mysql/my.cnf
+    #      - ./docker/mysql/sql:/docker-entrypoint-initdb.d/
+    command: 
+        - "--server-id=2"    
+        - "--default-authentication-plugin=mysql_native_password"
+        - "--character-set-server=utf8mb4"
+        - "--binlog-do-db=videos"
+        - "--binlog-ignore-db=mysql"
+        - "--binlog_format=row"
+        - "--log-bin=mysql-bin"
+        - "--sync_binlog=1"
+        - "--expire_logs_days=7"  
+        - "--slave_skip_errors=1062"  
+    restart: always
+    networks:
+      mysql-network:
+        ipv4_address: 172.19.182.1
+
+  mysql-slave2:
+    image: "mysql:8.0.27"
+    ports:
+      - "3312:3306"
+    container_name: mysql-slave2
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: "Admin,123"
+      MYSQL_DATABASE: "videos"
+      MYSQL_USER: "video"
+      MYSQL_PASSWORD: "root123"
+    volumes:
+      - ./docker/mysql/slave2/data:/var/lib/mysql
+      - ./docker/mysql/slave2/conf/my.cnf:/etc/mysql/my.cnf
+#      - ./docker/mysql/sql:/docker-entrypoint-initdb.d/
+    command: 
+        - "--server-id=3"    
+        - "--default-authentication-plugin=mysql_native_password"
+        - "--character-set-server=utf8mb4"
+        - "--binlog-do-db=videos"
+        - "--binlog-ignore-db=mysql"
+        - "--binlog_format=row"
+        - "--log-bin=mysql-bin"
+        - "--sync_binlog=1"
+        - "--expire_logs_days=7"  
+        - "--slave_skip_errors=1062"  
+    restart: always
+    networks:
+      mysql-network:
+        ipv4_address: 172.19.182.2
+
+  mysql-slave3:
+    image: "mysql:8.0.27"
+    ports:
+      - "3313:3306"
+    container_name: mysql-slave3
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: "Admin,123"
+      MYSQL_DATABASE: "videos"
+      MYSQL_USER: "video"
+      MYSQL_PASSWORD: "root123"
+    volumes:
+      - ./docker/mysql/slave3/data:/var/lib/mysql
+      - ./docker/mysql/slave3/conf/my.cnf:/etc/mysql/my.cnf
+#      - ./docker/mysql/sql:/docker-entrypoint-initdb.d/
+    command: 
+        - "--server-id=4"    
+        - "--default-authentication-plugin=mysql_native_password"
+        - "--character-set-server=utf8mb4"
+        - "--binlog-do-db=videos"
+        - "--binlog-ignore-db=mysql"
+        - "--binlog_format=row"
+        - "--log-bin=mysql-bin"
+        - "--sync_binlog=1"
+        - "--expire_logs_days=7"  
+        - "--slave_skip_errors=1062"  
+    restart: always
+    networks:
+      mysql-network:
+        ipv4_address: 172.19.182.3
+
+  mysql-slave4:
+    image: "mysql:8.0.27"
+    ports:
+      - "3314:3306"
+    container_name: mysql-slave4
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: "Admin,123"
+      MYSQL_DATABASE: "videos"
+      MYSQL_USER: "video"
+      MYSQL_PASSWORD: "root123"
+    volumes:
+      - ./docker/mysql/slave4/data:/var/lib/mysql
+      - ./docker/mysql/slave4/conf/my.cnf:/etc/mysql/my.cnf
+#      - ./docker/mysql/sql:/docker-entrypoint-initdb.d/
+    command: 
+        - "--server-id=5"    
+        - "--default-authentication-plugin=mysql_native_password"
+        - "--character-set-server=utf8mb4"
+        - "--binlog-do-db=videos"
+        - "--binlog-ignore-db=mysql"
+        - "--binlog_format=row"
+        - "--log-bin=mysql-bin"
+        - "--sync_binlog=1"
+        - "--expire_logs_days=7"  
+        - "--slave_skip_errors=1062"  
+    restart: always
+    networks:
+      mysql-network:
+        ipv4_address: 172.19.182.4
+
+
+  mysql-slave5:
+    image: "mysql:8.0.27"
+    ports:
+      - "3315:3306"
+    container_name: mysql-slave5
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: "Admin,123"
+      MYSQL_DATABASE: "videos"
+      MYSQL_USER: "video"
+      MYSQL_PASSWORD: "root123"
+    volumes:
+      - ./docker/mysql/slave5/data:/var/lib/mysql
+      - ./docker/mysql/slave5/conf/my.cnf:/etc/mysql/my.cnf
+#      - ./docker/mysql/sql:/docker-entrypoint-initdb.d/
+    command: 
+        - "--server-id=6"    
+        - "--default-authentication-plugin=mysql_native_password"
+        - "--character-set-server=utf8mb4"
+        - "--binlog-do-db=videos"
+        - "--binlog-ignore-db=mysql"
+        - "--binlog_format=row"
+        - "--log-bin=mysql-bin"
+        - "--sync_binlog=1"
+        - "--expire_logs_days=7"  
+        - "--slave_skip_errors=1062"  
+    restart: always
+    networks:
+      mysql-network:
+        ipv4_address: 172.19.182.5
+
+networks:
+  mysql-network:
+    ipam:
+      config:
+        - subnet: 172.19.182.0/16
