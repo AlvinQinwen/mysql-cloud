@@ -1,9 +1,9 @@
-# mysql-cloud
-docker-compose 搭建mysql集群 
+# mysql && redis cloud
+docker-compose 搭建mysql主从 与 redis 集群 
 
 ## 测试
 测试产生的数据可以通过Makefile删除
-命令：`make delete`
+命令：`make delete-mysql` `make delete-redis`
 
 ## 指定网段
 本项目未使用env文件！！！ 如需使用请自行修改
@@ -17,25 +17,21 @@ networks:
         - subnet: 172.19.182.0/16
 ```
 
-## 集群相关
-- 172.19.182.0 master
-- 172.19.182.1 slave1
-- 172.19.182.2 slave2
-- 172.19.182.3 slave3
-- 172.19.182.4 slave4
-- 172.19.182.5 slave5
+## mysql
 
-## 公网端口
-- 3310 -> master -> 3306
-- 3311 -> slave1 -> 3306
-- 3312 -> slave2 -> 3306
-- 3313 -> slave3 -> 3306
-- 3314 -> slave4 -> 3306
-- 3315 -> slave5 -> 3306
+### mysql集群相关信息 名称 宿主机端口 虚拟机端口 内网ip
+```text
+master -> 3310 -> 3306 -> 172.19.182.0 
+slave1 -> 3311 -> 3306 -> 172.19.182.1 
+slave2 -> 3312 -> 3306 -> 172.19.182.2
+slave3 -> 3313 -> 3306 -> 172.19.182.3
+slave4 -> 3314 -> 3306 -> 172.19.182.4
+slave5 -> 3315 -> 3306 -> 172.19.182.5
+```
 
-## 执行步骤
+### mysql集群执行步骤
 
-### master
+#### master
 ```shell
 mysql -h172.19.182.0 -P3306 -uroot -pAdmin,123
 ```
@@ -47,8 +43,8 @@ show master status;
 
 **获取File Position**
 
-### slave 
-1. 此处为从服务器ip地址 只展示一个 其余从从服务只需执行相同的操作**更换ip**即可
+#### slave 
+此处为从服务器ip地址 只展示一个 其余从从服务只需执行相同的操作**更换ip**即可
 ```shell
 mysql -h172.19.182.1 -P3306 -uroot -pAdmin,123 
 ```
@@ -78,7 +74,39 @@ SHOW SLAVE STATUS\G
 **Slave_SQL_Running: Yes** <br>
 后即可正常使用
 
+## redis
+1. 进入redis master1 `docker exec -it redis-master1 bash`
+2. 执行如下命令
+```redis
+redis-cli --cluster create 172.19.182.6:6379 \
+  172.19.182.7:6379 \
+  172.19.182.8:6379 \
+  172.19.182.9:6379 \
+  172.19.182.10:6379 \
+  172.19.182.11:6379 \
+  --cluster-replicas 1
+```
+3. 根据提示输入yes
+4. 找另一台服务器链接改redis集群 `redis-cli -c -h 172.19.182.6 -p Admin,123` **注意-c选项 否则会出错**
+5. 查看集群状态 `cluster info`
+6. 查看节点信息 `cluster nodes` 几个关键字 
+  - slave  -> 该节点为备份节点
+  - master -> 该节点为主节点
+  - myself -> 该节点为当前连接的节点
+7. 插入一个值 `set a 1` 正常出现 `Redirected to slot [15495] located at 172.19.182.8:6379` 即代表成功 
+8. 这里根据切片自动切换到了该数据分片所在的节点上，所以连接的节点变为了172.19.182.8:6379
+
+### redis 节点信息 名称 宿主机端口 虚拟机端口 内网IP
+```text
+  master1 -> 6380 -> 6379 -> 172.19.182.6
+  master2 -> 6381 -> 6379 -> 172.19.182.7
+  master3 -> 6382 -> 6379 -> 172.19.182.8
+  slave1  -> 6383 -> 6379 -> 172.19.182.9
+  slave2  -> 6384 -> 6379 -> 172.19.182.10
+  slave3  -> 6385 -> 6379 -> 172.19.182.11
+```
+
 ## 警告
-主从复制前master库中的表不会同步到从服务器中，需要自己手动同步，或者另寻他法
+mysql主从复制前master库中的表不会同步到从服务器中，需要自己手动同步，或者另寻他法
 技术浅薄，止于此，欢迎大佬pr提供良好的建议
 帮到你的话烦请点个star⭐
