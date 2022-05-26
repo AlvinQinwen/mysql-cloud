@@ -9,8 +9,8 @@ services:
     container_name: mysql-master
     environment:
       TZ: Asia/Shanghai
-      MYSQL_ROOT_PASSWORD: "Admin,123"
-      MYSQL_DATABASE: "videos"
+      MYSQL_ROOT_PASSWORD: "$PASSWORD$"
+      MYSQL_DATABASE: "$DATABASE$"
       MYSQL_USER: "video"
       MYSQL_PASSWORD: "root123"
     volumes:
@@ -39,8 +39,8 @@ services:
     container_name: mysql-slave1
     environment:
       TZ: Asia/Shanghai
-      MYSQL_ROOT_PASSWORD: "Admin,123"
-      MYSQL_DATABASE: "videos"
+      MYSQL_ROOT_PASSWORD: "$PASSWORD$"
+      MYSQL_DATABASE: "$DATABASE$"
       MYSQL_USER: "video"
       MYSQL_PASSWORD: "root123"
     volumes:
@@ -69,8 +69,8 @@ services:
     container_name: mysql-slave2
     environment:
       TZ: Asia/Shanghai
-      MYSQL_ROOT_PASSWORD: "Admin,123"
-      MYSQL_DATABASE: "videos"
+      MYSQL_ROOT_PASSWORD: "$PASSWORD$"
+      MYSQL_DATABASE: "$DATABASE$"
       MYSQL_USER: "video"
       MYSQL_PASSWORD: "root123"
     volumes:
@@ -99,8 +99,8 @@ services:
     container_name: mysql-slave3
     environment:
       TZ: Asia/Shanghai
-      MYSQL_ROOT_PASSWORD: "Admin,123"
-      MYSQL_DATABASE: "videos"
+      MYSQL_ROOT_PASSWORD: "$PASSWORD$"
+      MYSQL_DATABASE: "$DATABASE$"
       MYSQL_USER: "video"
       MYSQL_PASSWORD: "root123"
     volumes:
@@ -129,8 +129,8 @@ services:
     container_name: mysql-slave4
     environment:
       TZ: Asia/Shanghai
-      MYSQL_ROOT_PASSWORD: "Admin,123"
-      MYSQL_DATABASE: "videos"
+      MYSQL_ROOT_PASSWORD: "$PASSWORD$"
+      MYSQL_DATABASE: "$DATABASE$"
       MYSQL_USER: "video"
       MYSQL_PASSWORD: "root123"
     volumes:
@@ -160,8 +160,8 @@ services:
     container_name: mysql-slave5
     environment:
       TZ: Asia/Shanghai
-      MYSQL_ROOT_PASSWORD: "Admin,123"
-      MYSQL_DATABASE: "videos"
+      MYSQL_ROOT_PASSWORD: "$PASSWORD$"
+      MYSQL_DATABASE: "$DATABASE$"
       MYSQL_USER: "video"
       MYSQL_PASSWORD: "root123"
     volumes:
@@ -184,16 +184,13 @@ services:
         ipv4_address: 172.19.182.5
 
 
-
-
-
   redis-master1:
     image: redis:6.0.10
     container_name: redis-master1
     ports:
       - "6380:6379"
     environment:
-      - REDISCLI_AUTH=Admin,123   
+      - REDISCLI_AUTH=$PASSWORD$   
     volumes:
       - ./docker/redis/master1/data:/data/redis/data
       - ./docker/redis/master1/conf/redis.conf:/etc/redis.conf
@@ -211,7 +208,7 @@ services:
     ports:
       - "6381:6379"
     environment:
-      - REDISCLI_AUTH=Admin,123   
+      - REDISCLI_AUTH=$PASSWORD$   
     volumes:
       - ./docker/redis/master2/data:/data/redis/data
       - ./docker/redis/master2/conf/redis.conf:/etc/redis.conf
@@ -229,7 +226,7 @@ services:
     ports:
       - "6382:6379"
     environment:
-      - REDISCLI_AUTH=Admin,123   
+      - REDISCLI_AUTH=$PASSWORD$   
     volumes:
       - ./docker/redis/master3/data:/data/redis/data
       - ./docker/redis/master3/conf/redis.conf:/etc/redis.conf
@@ -247,7 +244,7 @@ services:
     ports:
       - "6383:6379"
     environment:
-      - REDISCLI_AUTH=Admin,123   
+      - REDISCLI_AUTH=$PASSWORD$   
     volumes:
       - ./docker/redis/slave1/data:/data/redis/data
       - ./docker/redis/slave1/conf/redis.conf:/etc/redis.conf
@@ -266,7 +263,7 @@ services:
     ports:
       - "6384:6379"
     environment:
-      - REDISCLI_AUTH=Admin,123   
+      - REDISCLI_AUTH=$PASSWORD$   
     volumes:
       - ./docker/redis/slave2/data:/data/redis/data
       - ./docker/redis/slave2/conf/redis.conf:/etc/redis.conf
@@ -284,7 +281,7 @@ services:
     ports:
       - "6385:6379"
     environment:
-      - REDISCLI_AUTH=Admin,123  
+      - REDISCLI_AUTH=$PASSWORD$  
     volumes:
       - ./docker/redis/slave3/data:/data/redis/data
       - ./docker/redis/slave3/conf/redis.conf:/etc/redis.conf
