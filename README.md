@@ -33,7 +33,7 @@ slave5 -> 3315 -> 3306 -> 172.19.182.5
 
 #### master
 ```shell
-mysql -h172.19.182.0 -P3306 -uroot -pAdmin,123
+mysql -h172.19.182.0 -P3306 -uroot -p$PASSWORD$
 ```
 
 获取master status
@@ -46,7 +46,7 @@ show master status;
 #### slave 
 此处为从服务器ip地址 只展示一个 其余从从服务只需执行相同的操作**更换ip**即可
 ```shell
-mysql -h172.19.182.1 -P3306 -uroot -pAdmin,123 
+mysql -h172.19.182.1 -P3306 -uroot -p$PASSWORD$ 
 ```
 
 ```mysql
@@ -87,7 +87,7 @@ redis-cli --cluster create 172.19.182.6:6379 \
   --cluster-replicas 1
 ```
 3. 根据提示输入yes
-4. 找另一台服务器链接改redis集群 `redis-cli -c -h 172.19.182.6 -p Admin,123` **注意-c选项 否则会出错**
+4. 找另一台服务器链接改redis集群 `redis-cli -c -h 172.19.182.6 -p $PASSWORD$` **注意-c选项 否则会出错**
 5. 查看集群状态 `cluster info`
 6. 查看节点信息 `cluster nodes` 几个关键字 
   - slave  -> 该节点为备份节点
