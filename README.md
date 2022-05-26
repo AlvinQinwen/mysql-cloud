@@ -50,7 +50,7 @@ mysql -h172.19.182.1 -P3306 -uroot -p$PASSWORD$
 ```
 
 ```mysql
-change master to master_host='172.19.182.0',master_port=33065,master_user='root',master_password='Admin,123',master_log_file='mysql-bin.000003',master_log_pos=156;
+change master to master_host='172.19.182.0',master_port=33065,master_user='root',master_password='$PASSWORD$',master_log_file='mysql-bin.000003',master_log_pos=156;
 ```
 1.  ster_host master的ip 
 2.  ster_port master的端口
